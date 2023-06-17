@@ -25,6 +25,7 @@ async def on_message(message):
         author_mention = message.author.mention
         await message.channel.send(f"Hey {author_mention}!")
 
+    #role_checker.py
     await check_message_for_role(client, message)
     return  # Stop further processing of the message
 
