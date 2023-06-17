@@ -2,10 +2,10 @@ import discord
 import asyncio
 
 warning_limit = 3  # Number of warnings before kicking the user
-log_channel_id = 1119652152521015386  # Replace with your desired log channel ID
+log_channel_id = 948160684896681994  # Replace with your desired log channel ID
 ignored_users = set()  # Set to store ignored user IDs
 ignore_join_time = 5  # Ignore join events for 10 seconds
-delete_delay = 5  # Delay in seconds before deleting the bot's warning message
+delete_delay = 30  # Delay in seconds before deleting the bot's warning message
 
 warnings = {}  # Dictionary to store user warnings
 
@@ -13,7 +13,7 @@ async def check_message_for_role(client, message):
     if message.author.bot or message.author.id in ignored_users:
         return
 
-    role_ids = [1119652240681078835, 1119652300290543636, 1119652348323700857, 1119652402446995538]  # Replace with your desired role IDs
+    role_ids = [1118045469516505201, 1118045651213746237, 1118045706108813394, 1118045751260499978, 1118045793354530876, 1118045874283610172, 1118045930218860594,1118045980114305155]  # Replace with your desired role IDs
 
     # Check if user joined within the ignore join time
     if not has_ignore_join_expired(message.author):
@@ -61,7 +61,15 @@ def has_ignore_join_expired(user):
     # Replace this logic with your own implementation
     return True
 
+
 async def kick_user(user):
+    invite_link = await user.guild.text_channels[0].create_invite(reason="Kicked user rejoin", max_uses=1)
+
+    try:
+        await user.send(f"You have been kicked from the server. If it was a mistake, you can rejoin using the following invite link: {invite_link}")
+    except discord.Forbidden:
+        print(f"Failed to send a private message to {user} (ID: {user.id}).")
+
     await user.kick(reason="Reached warning limit")  # Kicks the user from the server
 
     guild = user.guild
@@ -71,10 +79,12 @@ async def kick_user(user):
     else:
         print("Log channel not found. Please check the provided log channel ID.")
 
+
 async def send_warning_message(channel, author_mention, remaining_warnings):
-    warning_message = await channel.send(f"{author_mention}, you don't have the required role! You have {remaining_warnings} warning(s) remaining.")
+    warning_message = await channel.send(f"{author_mention}, you don't have  Age-role! take it from <#952278616803274772> You have {remaining_warnings} warning(s) remaining.")
     return warning_message
 
+#Delets its messages after set seconds
 async def delete_message_after_delay(message, delay):
     await asyncio.sleep(delay)
     await message.delete()
