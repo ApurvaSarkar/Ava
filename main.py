@@ -12,16 +12,16 @@ client = commands.Bot(command_prefix='!', intents=intents)  # Pass the intents a
 
 @client.event
 async def on_ready():
-    print("Bot is online and ready!")
+    print("Ava is online and ready!")
 
 @client.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == client.user: #checks if the message send by a bot or not
         return
 
     content = message.content.lower()
 
-    if content == 'hello':
+    if content == 'Hello':
         author_mention = message.author.mention
         await message.channel.send(f"Hey {author_mention}!")
 
