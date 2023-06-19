@@ -18,11 +18,15 @@ async def check_bump(message):
                     general_channel = message.guild.get_channel(general_channel_id)
 
                     if bump_channel and general_channel:
-                        await general_channel.send(f"Thank you {message.author.mention} for bumping!")
+                        if message.content.startswith('Server bumped by'):
+                            user_id = message.author.id
+                            server_id = message.guild.id
+                            print(f'Server bumped by user {user_id} in server {server_id}')
+                            await general_channel.send(f"Thank you {user_id} for bumping the server!")
 
                         # Delete the messages in general channel
                         async for msg in general_channel.history():
-                            if msg.author == message.guild.me and msg.content == "Server is ready to be bumped!":
+                            if msg.author == message.guild.me and msg.content == "<#1120345932643446935> Server is ready to be bumped!":
                                 await msg.delete()
                                 break
 
