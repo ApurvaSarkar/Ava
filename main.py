@@ -1,48 +1,48 @@
 import discord
 import os
 from discord.ext import commands
+from check_role import check_message_for_role
+#from bump_reminder import check_bump
 
 from dotenv import load_dotenv
-from role_checker import check_message_for_role
 
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = commands.Bot(command_prefix='!', intents=intents)  # Pass the intents argument
+client = commands.Bot(command_prefix='!',
+                      intents=intents)  # Pass the intents argument
 
+#keepBotAlive
+from keep_alive import keep_alive
+keep_alive()
+
+#status
 @client.event
 async def on_ready():
-    print("Ava is online and ready!")
+  await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="IM NOT A CAT!!"))
+  print("Ava is online and ready!")
+
 
 @client.event
 async def on_message(message):
-    if message.author == client.user: #checks if the message send by a bot or not
-        return
+  if message.author == client.user:
+    return
 
-    content = message.content.lower()
+  content = message.content.lower()
 
-    if content == 'Hello':
-        author_mention = message.author.mention
-        await message.channel.send(f"Hey {author_mention}!")
+  if content == 'hello':
+    author_mention = message.author.mention
+    await message.channel.send(f"Hey {author_mention}!")
 
-    
-#role_checker.py
-    await check_message_for_role(client, message)
-    return  # Stop further processing of the message
+  # Role checking logic
+  await check_message_for_role(client, message)
 
-
-#Bump reminder
-from bump_reminder import check_bump
-@client.event
-async def on_message(message):
-    await check_bump(message)
+  # Bump reminder logic
+  #await check_bump(message)
 
 
 #token
 load_dotenv()
-token = os.getenv("TOKEN")
+my_secret = os.environ['TOKEN']
 
-try:
-    client.run(token)
-except:
-    os.system("kill 1")
+client.run(my_secret)
