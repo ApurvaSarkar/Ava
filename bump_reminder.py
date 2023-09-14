@@ -1,8 +1,10 @@
+
+
 import discord
 import asyncio
 
-bump_channel_id = 947359201288671303
-general_channel_id = 837386985638985829
+bump_channel_id = 947359201288671303 
+general_channel_id = 837386985638985829 
 disboard_bot_id = 302050872383242240
 sleep_time = 7200  #2hr
 
@@ -11,16 +13,16 @@ async def check_bump(message):
   if isinstance(message, discord.Message):
     if message.channel.id == bump_channel_id and message.author.id == disboard_bot_id:
       if len(message.embeds) > 0:
-        embed = message.embeds[0]  # Assuming there is only one embed
+        embed = message.embeds[0]  
         if "Bump done! :thumbsup:" in embed.description:
-          # Process the matching bump done message
+          
           print("Bot is matched")
           bump_channel = message.guild.get_channel(bump_channel_id)
           general_channel = message.guild.get_channel(general_channel_id)
 
           if bump_channel and general_channel:
             if message.reference is not None and message.reference.resolved:
-              interaction_user = message.reference.resolved.author  # Get the user who used the application command
+              interaction_user = message.reference.resolved.author  
               await general_channel.send(
                 f"Thank you {interaction_user.mention} for bumping!")
             else:
@@ -28,7 +30,7 @@ async def check_bump(message):
                 "Unable to determine the user who used the application command."
               )
 
-            # Rest of your code...
+            
 
       # Delete the messages in general channel
       async for msg in general_channel.history():
@@ -54,4 +56,4 @@ async def check_bump(message):
       await general_channel.send("Server is ready to be bumped!")
       await bump_channel.send("Use `/bump` to bump the server!")
 
-      # Rest of your code...
+    
