@@ -1,5 +1,5 @@
 # Ava
-Ava is the discord bot develop by touma
+Ava is the discord bot develop by Apurva
 
 winget
 winget upgrade -h –all
